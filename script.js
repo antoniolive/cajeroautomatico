@@ -16,6 +16,9 @@ var cuentas = [
     }
     
   ];
+   var cuentaActual = [];
+   var suma = 0;
+
 
   
 /*function validacionPass (){
@@ -30,25 +33,8 @@ var cuentas = [
         validacionPass ();
     }
 }*/
-
-function cuentaMali () {
-    let cuentaSeleccionada = "Mali";
-    let password = prompt ('Ingresa contraseña');
-    cuentaActual = cuentas.find(cuenta => cuenta.nombre === cuentaSeleccionada); 
-
-    if (password == cuentaActual.pass) {
-        alert('contraseña correcta');
-        edoCuenta();
-    } else {
-        alert ('contraseña incorrecta, intenta de nuevo');
-        cuentaMali ();
-    }
-    
-}
-
-
-function cuentaGera () {
-    var cuentaSeleccionada = "Gera";
+function usuario (user) {
+    var cuentaSeleccionada = user;
 let password = prompt ('Ingresa contraseña');
     cuentaActual = cuentas.find(cuenta => cuenta.nombre === cuentaSeleccionada); 
 
@@ -57,36 +43,20 @@ let password = prompt ('Ingresa contraseña');
         edoCuenta();
     } else {
         alert ('contraseña incorrecta, intenta de nuevo');
-        cuentaGera ();
+        usuario (cuentaSeleccionada);
     }
     
 }
-
-function cuentaMaui () {
-    let cuentaSeleccionada = "Maui";
-    let password = prompt ('Ingresa contraseña');
-    cuentaActual = cuentas.find(cuenta => cuenta.nombre === cuentaSeleccionada); 
-
-    if (password == cuentaActual.pass) {
-        alert('contraseña correcta');
-        edoCuenta();
-    } else {
-        alert ('contraseña incorrecta, intenta de nuevo');
-        cuentaMaui ();
-    }
-    
-}
-
 
 
 function edoCuenta (){
     let main = document.getElementById("main");
     let info = `<div id="info">
-        <h2>Bienvenido: <span> Nombre de cuenta</span></h2>
+        <h2>Bienvenido: <span>${cuentaActual.nombre}</span></h2>
         <div id="opciones">
             <button onclick="consultarSaldo()">Consultar saldo</button>
-            <button onclick="ingresarDinero()">Ingresar dinero</button>
-            <button onclick="retirarDinero()">Retirar dinero</button>
+            <button onclick="movimiento('deposito')">Ingresar dinero</button>
+            <button onclick="movimiento('retiro')">Retirar dinero</button>
             <button onclick="salirCuenta()">Salir de la cuenta</button>
         </div> 
     </div>`
@@ -97,17 +67,35 @@ function edoCuenta (){
 
 function consultarSaldo(){
     alert ('El saldo actual es: $'+cuentaActual.saldo)
-
+            //return (cuentaActual.saldo);
+    
 }
 
+function movimiento(movimiento) {
+    let saldoIngresado = parseFloat(prompt ('Ingresa cantidad:') ) ;
+    
+    if (movimiento === "deposito"){
+        cuentaActual.saldo += saldoIngresado;
+        if (cuentaActual.saldo >= 10 && cuentaActual.saldo <= 990){
+            consultarSaldo ( );
+            return
+        } else {
+            cuentaActual.saldo -= saldoIngresado;
+            alert ("El saldo supera el limite maximo de 990") 
+        }
+        cantidad = consultarSaldo ( );
+    } else if (movimiento === "retiro"){
+        cuentaActual.saldo -= saldoIngresado;
+        if (cuentaActual.saldo <= 10){
+            cuentaActual.saldo += saldoIngresado;
+            alert ("El saldo supera el limite inferior maximo de 10") 
+        } else {
+            consultarSaldo ( );
+            return 
+        }
+        consultarSaldo ( );
 
-function ingresarDinero(){
-    cuentaActual.saldo = prompt ('Ingresa cantidad:') + cuentaActual.saldo;
-    consultarSaldo();
-}
-
-function retirarDinero(){
-
+    }
 }
 
 function salirCuenta(){
@@ -115,9 +103,9 @@ function salirCuenta(){
     let main = `<div id="main">
     <h2>Selecciona tu cuenta</h2>
     
-        <button onclick="cuentaMali ();">Mali</button>
-        <button onclick="cuentaGera ();">Gera</button>
-        <button onclick="cuentaMaui ();">Maui</button>
+        <button onclick="usuario ('Mali');">Mali</button>
+        <button onclick="usuario ('Gera');">Gera</button>
+        <button onclick="usuario ('Maui');">Maui</button>
         
     </div>`
     info.innerHTML = main;
