@@ -20,19 +20,7 @@ var cuentas = [
    var suma = 0;
 
 
-  
-/*function validacionPass (){
-    let password = prompt ('Ingresa contraseña');
-    cuentaActual = cuentas.find(cuenta => cuenta.nombre === cuentaSeleccionada); 
 
-    if (password == cuentaSeleccionada.pass) {
-        alert('contraseña correcta');
-        edoCuenta();
-    } else {
-        alert ('contraseña incorrecta, intenta de nuevo');
-        validacionPass ();
-    }
-}*/
 function usuario (user) {
     var cuentaSeleccionada = user;
 let password = prompt ('Ingresa contraseña');
@@ -67,8 +55,7 @@ function edoCuenta (){
 
 function consultarSaldo(){
     alert ('El saldo actual es: $'+cuentaActual.saldo)
-            //return (cuentaActual.saldo);
-    
+        
 }
 
 function movimiento(movimiento) {
